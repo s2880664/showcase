@@ -1,0 +1,4 @@
+#define PORT 80
+#define COMMANDLENGTH 64
+#define CONTINUESIGNAL "y"
+#define CONTINUESIGNAL_LENGTH 2
