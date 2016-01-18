@@ -1,0 +1,182 @@
+<ion-view view-title="Herbs">
+  <ion-content class="light-green-bg" ng-controller="HerbsCtrl">
+
+    <div class="card">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input ng-model="nameInput" type="search" placeholder="Search by Name (Overrides action selections)">
+      </label>
+    </div>
+
+    <!--- Search Row -->
+    <div class="row responsive-md">
+      <!--Brand Search -->
+      <div class ="col search-divs" >
+        <div class="card list search-cards">
+          <div class="item item-divider item-icon-right row responsive-md" ng-click="open =! open">
+            <h2 class="search-title padding text-center">Select Brands <i class="icon ion-ios-arrow-down royal"></i></h2>
+          </div>
+          <div class="item item-text-wrap" ng-show="open" ng-animate="'animate'">
+            <ul class="list" ng-animate="'animate'">
+              <div class ="row">
+                <div class ="col">
+                  <ion-checkbox ng-model="mediherb">Mediherb</ion-checkbox>
+                </div>
+                <div class ="col">
+                  <ion-checkbox ng-model="herbalExtract">Herbal Extract</ion-checkbox>
+                </div>
+              </div>
+              <div class ="row">
+                <div class ="col">
+                  <ion-checkbox ng-model="optimalRx">Optimal Rx</ion-checkbox>
+                </div>
+                <div class ="col">
+                  <ion-checkbox ng-model="nutritioncare">Nutritioncare</ion-checkbox>
+                </div>
+              </div>
+              <div class ="row">
+                <div class ="col">
+                  <ion-checkbox ng-model="all">All</ion-checkbox>
+                </div>
+                <!-- <a class="button button-clear button-positive text-center icon-right ion-chevron-right" ng-click="storeScopeData()" href="#/tab/herbs/search">Search for Herbs</a>
+                <a class="button button-clear button-positive text-center icon-right ion-chevron-right" ng-click="updateSearchList()">Update Search List</a> -->
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Brand Search End -->
+
+      <!-- Action Search -->
+      <div class ="col search-divs" >
+        <div class="card search-cards" >
+          <div class="item item-divider item-icon-right row responsive-md" ui-sref="tab.actionSearch">
+            <h2 class="search-title padding text-center">Select Actions <i class="icon ion-ios-arrow-right royal"></i></h2>
+          </div>
+          <div ng-animate="'animate'">
+            <div class="action-spacing" ng-repeat="action in actions">
+              <h3><i class="icon action-icon ion-ios-minus padding-left padding-top assertive big-text" ng-click="removeAction(action)"></i> {{action.action}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Action Search End -->
+    </div>
+    <!-- Search Row End -->
+    <div class="padding">
+      <a class="button button-royal button-block icon-right ion-refresh button-stable" ng-click="updateSearchListButton()">Update Search List </a>
+    </div>
+    <!--
+    <div ng-if="herbsArr.length > 0" class="card herb-card">
+    <p class="black-text">RESULTS: {{resultCount}}</p>
+  </div>
+-->
+<div ng-if="herbsArr.length > 0" class="list card  item-text-wrap herb-card" ng-repeat="herb in herbsArr">
+  <!-- Herbs Tab Start -->
+  <div class="item item-divider row responsive-md" ng-click="open =! open" ng-init="open = 0">
+    <div class="col item-icon-right">
+      <p class="black-text">{{herb.commonName}}</p> <p class="italic">{{herb.latinBinomialName}}</p> <i class="icon ion-plus-circled royal" ng-click="addHerb(herb); open =! open"></i>
+    </div>
+    <div class="col" ng-show="!open">
+      <p class="black-text">ACTIONS</p>
+      <p ng-repeat="action in herb.actions">
+        {{action.action}}
+      </p>
+    </div>
+    <div class="col" ng-show="!open">
+      <p class="black-text">WEEKLY DOSAGE<br>RANGE</p>
+      <p>{{herb.weeklyDosageRange}}ml</p>
+    </div>
+    <div class="col" ng-show="!open">
+      <p class="black-text">PREGNANCY<br>CATEGORY</p>
+      <p ng-if="herb.pregnancyCategory">{{herb.pregnancyCategory}}</p>
+      <p ng-if="!herb.pregnancyCategory">N/A</p>
+    </div>
+    <div class="col" ng-show="!open">
+      <p class="black-text">LACTATION<br>CATEGORY</p>
+      <p ng-if="herb.lactationCategory">{{herb.lactationCategory}}</p>
+      <p ng-if="!herb.lactationCategory">N/A</p>
+    </div>
+    <div class="col" ng-show="!open">
+      <p class="black-text">INTERACTIONS</p>
+      <p ng-if="herb.interactions.length > 0" ng-repeat="interaction in herb.interactions">
+        {{interaction.drugType}}
+      </p>
+      <p ng-if="herb.interactions.length < 1">N/A</p>
+      <!-- {{herb.interations}}-->
+    </div>
+    <div class="col" ng-show="!open">
+      <p class="black-text">FLAGS</p>
+      <p ng-if="herb.flags.length > 0" ng-repeat="flag in herb.flags">
+        {{flag.flag}}
+      </p>
+      <p ng-if="herb.flags.length < 1">N/A</p>
+    </div>
+  </div>
+  <div class="item item-text-wrap" ng-show="open" ng-animate="'animate'">
+    <div class="row responsive-md">
+      <div class="col">
+        <p class="orangeText">BRAND</p>
+        <p>{{herb.brand}}</p>
+      </div>
+      <div class="col">
+        <p class="orangeText">RATIO</p>
+        <p>{{herb.ratio}}</p>
+      </div>
+      <div class="col">
+        <p class="orangeText">WEEKLY DOSAGE RANGE</p>
+        <p>{{herb.weeklyDosageRange}}ml</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p class="orangeText">ACTIONS</p>
+        <p ng-if="herb.actions" ng-repeat="action in herb.actions">{{action.action}}</p>
+        <p ng-if="!herb.actions">N/A</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p class="orangeText">PREGNANCY CATEGORY</p>
+        <p ng-if="herb.pregnancyCategory">{{herb.pregnancyCategory}}</p>
+        <p ng-if="!herb.pregnancyCategory">N/A</p>
+        <div class="col"><p>{{herb.pregnancyDescription}}</p></div>
+      </div>
+      <div class="col">
+        <p class="orangeText">LACTATION CATEGORY</p>
+        <p ng-if="herb.lactationCategory">{{herb.lactationCategory}}</p>
+        <p ng-if="!herb.lactationCategory">N/A</p>
+        <div class="col"><p>{{herb.lactationDescription}}</p></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p class="orangeText">INTERACTIONS</p>
+        <div ng-if="herb.interactions.length > 0" ng-repeat="interaction in herb.interactions"><p class="black-text">DRUG TYPE</p>
+          <p>{{interaction.drugType}}</p>
+          <p class="black-text">INTERACTION</p><p>{{interaction.interaction}}</p></div>
+          <p ng-if="herb.interactions.length < 1">N/A</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p class="orangeText">FLAGS</p>
+          <p ng-if="herb.flags.length > 0" ng-repeat="flag in herb.flags">
+            {{flag.flag}}
+          </p>
+          <p ng-if="herb.flags.length < 1">N/A</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Herbs Tab End -->
+
+  <div ng-if="herbsArr.length > 0">
+    <p><a ng-if="pageNumber > 0" class="button icon-left ion-chevron-left button-clear button-dark" ng-click="paginationClick('down')">Back</a> <span class="black-text">Page: {{pageNumber}} of {{resultCount/10}}</span> <a ng-if="((pageNumber+1)*10) < resultCount" class="button icon-right ion-chevron-right button-clear button-dark" ng-click="paginationClick('up')">Forward</a></p>
+  </div>
+
+  <div ng-if="herbsArr.length < 1" class="card padding if-card">
+    <p>No results found, try changing search options.</p>
+  </div>
+</ion-content>
+</ion-view>
