@@ -2,7 +2,7 @@
 ## Overview
 This repository contains various collections of code, and programming assignments, that I have written during my studies at Griffith uni.
 ## Brief Folder Content Descriptions
-* **Example MVC**(Javascript, HTML, SQLite, AngularJS, Cordova)
+* **Example MVC**(Javascript, HTML, SQLite, AngularJS, Ionic)
   * Contains an example of a model, a view, and a controller created for the herbal pro app. The code relates to the herbs tab in the app.
 * **Assignment 1**(C)
   * The objective of this assignment is to write a simple remote execution system. The remote execution system would allow a user to send 5 different commands to the server, put, get, run, list, and sys. Both the server and the client will be non-blocking and accept multiple quries and connections.
